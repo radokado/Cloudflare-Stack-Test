@@ -1,0 +1,6 @@
+{
+  "name": "Cloudflare Stack Test",
+  "description": "Minimalistická PWA aplikácia na testovanie celého Cloudflare Stacku (Pages Functions, D1, R2) a Google Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

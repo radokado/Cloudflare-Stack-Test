@@ -1,0 +1,24 @@
+{
+  "short_name": "CF Stack",
+  "name": "Cloudflare Stack Test",
+  "description": "Minimalistická PWA pre testovanie Cloudflare Pages Functions, D1, R2 a Gemini AI",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%230f172a'/><path d='M390 260c0-60-48-108-108-108-50 0-93 34-104 81-42 6-74 42-74 86 0 48 39 87 87 87h192c48 0 87-39 87-87 0-45-34-82-80-86z' fill='%23f97316'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%230f172a'/><path d='M390 260c0-60-48-108-108-108-50 0-93 34-104 81-42 6-74 42-74 86 0 48 39 87 87 87h192c48 0 87-39 87-87 0-45-34-82-80-86z' fill='%23f97316'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0f172a",
+  "theme_color": "#f97316",
+  "display": "standalone",
+  "orientation": "portrait"
+}
