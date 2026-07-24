@@ -5,18 +5,5 @@
   "compatibility_date": "2026-03-01",
   "compatibility_flags": [
     "nodejs_compat"
-  ],
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "cloudflare-stack-test",
-      "database_id": "6f391e52-1fdb-4689-9af6-168d10b65cd8"
-    }
-  ],
-  "r2_buckets": [
-    {
-      "binding": "BUCKET",
-      "bucket_name": "cf-stack-test-r2"
-    }
   ]
 }
