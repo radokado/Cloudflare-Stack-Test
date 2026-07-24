@@ -9,8 +9,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "cf-stack-test-db",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+      "database_name": "cloudflare-stack-test",
+      "database_id": "6f391e52-1fdb-4689-9af6-168d10b65cd8"
     }
   ],
   "r2_buckets": [

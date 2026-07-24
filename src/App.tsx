@@ -4,6 +4,9 @@ import {
   XCircle,
   RefreshCw,
   Cloud,
+  CloudLightning,
+  Zap,
+  Layers,
   Database,
   HardDrive,
   Sparkles,
@@ -292,8 +295,9 @@ export default function App() {
       <header className="sticky top-0 z-30 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3 sm:px-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
-              <Cloud className="w-6 h-6 text-white" />
+            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/25 border border-orange-400/30">
+              <CloudLightning className="w-6 h-6 text-white" />
+              <Zap className="w-3 h-3 text-amber-200 fill-amber-300 absolute -bottom-0.5 -right-0.5 drop-shadow" />
             </div>
             <div>
               <div className="flex items-center gap-2">

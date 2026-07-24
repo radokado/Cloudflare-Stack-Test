@@ -57,25 +57,21 @@ Aplikácia **Cloudflare Stack Test** je minimalistická PWA (Progressive Web App
 
 ## ☁️ Sprevádzkovanie a nasadenie na Cloudflare Pages
 
-### 1. Vytvorenie D1 Databázy
-Vložte príkaz do terminálu Wrangler CLI:
-```bash
-npx wrangler d1 create cf-stack-test-db
-```
-Po vytvorení skopírujte vygenerované `database_id` do súboru `wrangler.jsonc`:
+### 1. Nastavenie D1 Databázy
+Vaša databáza `cloudflare-stack-test` je nakonfigurovaná v `wrangler.jsonc`:
 ```jsonc
 "d1_databases": [
   {
     "binding": "DB",
-    "database_name": "cf-stack-test-db",
-    "database_id": "TU_VLOŽTE_VAŠE_DATABASE_ID"
+    "database_name": "cloudflare-stack-test",
+    "database_id": "6f391e52-1fdb-4689-9af6-168d10b65cd8"
   }
 ]
 ```
 
-A aplikujte SQL tabuľky zo súboru `schema.sql`:
+Aplikujte SQL tabuľky zo súboru `schema.sql` do D1 databázy:
 ```bash
-npx wrangler d1 execute cf-stack-test-db --remote --file=./schema.sql
+npx wrangler d1 execute cloudflare-stack-test --remote --file=./schema.sql
 ```
 
 ### 2. Vytvorenie R2 Bucketu
