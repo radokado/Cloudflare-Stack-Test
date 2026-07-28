@@ -20,7 +20,8 @@ import {
   ShieldCheck,
   AlertTriangle,
   Info,
-  Clock
+  Clock,
+  Mic
 } from 'lucide-react';
 
 interface ServiceStatus {
@@ -92,8 +93,73 @@ export default function App() {
   const [chatHistory, setChatHistory] = useState<ChatRecord[]>([]);
   const [chatLoading, setChatLoading] = useState(false);
 
+  // Voice recording state
+  const [isRecording, setIsRecording] = useState(false);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+  const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+
   // Status message bar
   const [statusMsg, setStatusMsg] = useState<{ type: 'success' | 'error' | 'info'; text: string } | null>(null);
+
+  // Voice recording handlers
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      setMediaRecorder(recorder);
+      setAudioChunks([]);
+      
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) {
+          setAudioChunks((prev) => [...prev, e.data]);
+        }
+      };
+      
+      recorder.start();
+      setIsRecording(true);
+      showStatus('info', 'Nahrávam...');
+    } catch (err) {
+      showStatus('error', 'Nepodarilo sa získať prístup k mikrofónu');
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      setIsRecording(false);
+      showStatus('info', 'Spracúvam hlas...');
+      mediaRecorder.stream.getTracks().forEach((track) => track.stop());
+    }
+  };
+
+  useEffect(() => {
+    if (audioChunks.length > 0 && !isRecording) {
+      const blob = new Blob(audioChunks, { type: 'audio/webm' });
+      transcribeAudio(blob);
+    }
+  }, [audioChunks, isRecording]);
+
+  const transcribeAudio = async (blob: Blob) => {
+    try {
+      const formData = new FormData();
+      formData.append('audio', blob, 'recording.webm');
+      
+      const res = await fetch('/api/transcribe', {
+        method: 'POST',
+        body: formData
+      });
+      const data = (await res.json()) as { success?: boolean; text?: string; error?: string };
+      
+      if (data.success && data.text) {
+        setNoteContent((prev) => (prev ? `${prev} ${data.text}` : data.text));
+        showStatus('success', 'Hlas úspešne prepísaný!');
+      } else {
+        showStatus('error', 'Chyba pri prepise: ' + (data.error || 'Neznáma chyba'));
+      }
+    } catch (err) {
+      showStatus('error', 'Chyba pri spracovaní audia');
+    }
+  };
 
   // Fetch Health status
   const fetchHealth = async () => {
@@ -567,15 +633,27 @@ export default function App() {
                   <label className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1">
                     Obsah poznámky (Content)
                   </label>
-                  <textarea
-                    id="note-content-input"
-                    rows={2}
-                    placeholder="Napíšte text poznámky, ktorý sa zapíše do SQL tabuľky D1..."
-                    value={noteContent}
-                    onChange={(e) => setNoteContent(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-orange-500"
-                    required
-                  />
+                  <div className="relative">
+                    <textarea
+                      id="note-content-input"
+                      rows={2}
+                      placeholder="Napíšte text poznámky, ktorý sa zapíše do SQL tabuľky D1..."
+                      value={noteContent}
+                      onChange={(e) => setNoteContent(e.target.value)}
+                      className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-100 focus:outline-none focus:border-orange-500 pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={isRecording ? stopRecording : startRecording}
+                      className={`absolute right-2 top-2 p-1.5 rounded-full transition ${
+                        isRecording ? 'bg-rose-500 text-white animate-pulse' : 'bg-slate-800 text-slate-400 hover:text-orange-400'
+                      }`}
+                      title={isRecording ? 'Zastaviť nahrávanie' : 'Nahrávať hlasovú poznámku'}
+                    >
+                      <Mic className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex justify-end">

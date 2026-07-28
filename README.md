@@ -1,4 +1,4 @@
-# Cloudflare Stack Test  🚀
+# Cloudflare Stack Test 🚀
 
 Aplikácia **Cloudflare Stack Test** je minimalistická PWA (Progressive Web App) navrhnutá pre komplexný test celého ekosystému **Cloudflare Pages** a **Google Gemini AI**.
 

@@ -222,6 +222,18 @@ async function startServer() {
     }
   });
 
+  // 5. TRANSCRIBE API (/api/transcribe - Gemini AI transcription simulation)
+  app.post('/api/transcribe', express.raw({ type: '*/*', limit: '10mb' }), async (req, res) => {
+    try {
+      res.json({
+        success: true,
+        text: '[Simulovaný prepis AI]: Toto je textový prepis vášho zvukového záznamu.'
+      });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
   // Vite middleware setup
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
